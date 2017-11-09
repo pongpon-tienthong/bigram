@@ -50,9 +50,27 @@ public class ExtractStringServiceTest {
         Assert.assertArrayEquals(new String[]{"ABC", "DE", "F"}, extractStringService.splitTextBySpace(expectedInput));
     }
 
-//    @Test
-//    public void extractTwoAdjacentWord_ThreeAdjacentWords_ShouldReturnTwoBigram() {
-//        String expectedInput = "ABC DEF GHI";
-//        Assert.assertArrayEquals(new String[]{"ABC DEF", "DEF GHI"}, extractStringService.extractTwoAdjacentWord(expectedInput));
-//    }
+    @Test
+    public void extractBigram_ThreeAdjacentWords_ShouldReturnTwoBigram() {
+        String expectedInput = "ABC DEF GHI";
+        Assert.assertArrayEquals(new String[]{"ABC DEF", "DEF GHI"}, extractStringService.extractBigram(expectedInput));
+    }
+
+    @Test
+    public void extractBigram_FourAdjacentWords_ShouldReturnThreeBigram() {
+        String expectedInput = "ABC DEF GHI JKL";
+        Assert.assertArrayEquals(new String[]{"ABC DEF", "DEF GHI", "GHI JKL"}, extractStringService.extractBigram(expectedInput));
+    }
+
+    @Test
+    public void extractBigram_FourAdjacentWordsWithMoreThanOneSpaceInBetween_ShouldReturnThreeBigram() {
+        String expectedInput = "ABC  DEF   GHI    JKL";
+        Assert.assertArrayEquals(new String[]{"ABC DEF", "DEF GHI", "GHI JKL"}, extractStringService.extractBigram(expectedInput));
+    }
+
+    @Test
+    public void extractBigram_FourAdjacentWordsWithMoreThanOneSpaceInFront_ShouldReturnThreeBigram() {
+        String expectedInput = "  ABC  DEF   GHI    JKL  ";
+        Assert.assertArrayEquals(new String[]{"ABC DEF", "DEF GHI", "GHI JKL"}, extractStringService.extractBigram(expectedInput));
+    }
 }
