@@ -2,6 +2,8 @@ package pongpon.springframework.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
+
 @Service
 public class ExtractStringService {
 
@@ -23,6 +25,29 @@ public class ExtractStringService {
     }
 
     public String[] splitTextBySpace(String str) {
-        return str.trim().split("\\s+");
+
+        str = str.toLowerCase().trim();
+        if (str.endsWith(".")) {
+            str = str.substring(0, str.length() - 1);
+        }
+
+        return str.split("\\s+");
+    }
+
+    public LinkedHashMap<String, Integer> countBigram(String str) {
+
+        LinkedHashMap<String, Integer> countHashMap = new LinkedHashMap<>();
+        String[] bigrams = extractBigram(str);
+
+        for (String bigram: bigrams) {
+
+            if(countHashMap.containsKey(bigram)) {
+                countHashMap.put(bigram, countHashMap.get(bigram) + 1);
+            } else {
+                countHashMap.put(bigram, 1);
+            }
+        }
+
+        return countHashMap;
     }
 }
